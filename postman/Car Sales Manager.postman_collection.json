@@ -1,0 +1,33 @@
+{
+	"info": {
+		"_postman_id": "aee7135b-55c4-4cb0-8372-dbab1b695ef9",
+		"name": "Car Sales Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6012174"
+	},
+	"item": [
+		{
+			"name": "00 - Home - Hello World Message 😁",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{basePath}}/",
+					"host": [
+						"{{basePath}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "local-url",
+			"value": "http://localhost:3000"
+		}
+	]
+}
