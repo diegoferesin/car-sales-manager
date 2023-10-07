@@ -5,4 +5,6 @@ router.get('/', (req, res) => {
     res.send('Hello team 1 and Hello World!');
 });
 
+router.use('/', require('./swagger'));
+
 module.exports = router;
