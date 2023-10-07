@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const port = process.env.PORT || 3000;
 const app = express();
 
+const mongodb = require('./data/database');
+
 app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -16,6 +18,11 @@ app.use((req, res, next) => {
 
 app.use('/', require('./routes'));
 
-app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+mongodb.initDb((err, db) => {
+    try {
+        app.listen(port, () => {console.log(`Server listening on port ${port}`)});
+    }
+    catch (err){
+        console.log(err);
+    }
 });
