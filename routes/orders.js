@@ -4,7 +4,7 @@ const router = express.Router();
 // Import validation middleware for request validation
 const validation = require('../middleware/validate');
 // Import orderController for handling order-related routes
-const orderController = require('../controllers/order'); 
+const orderController = require('../controllers/orders'); 
 const { isAuthenticated } = require('../middleware/authenticate');
 
 //Handle GET requests for a order

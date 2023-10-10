@@ -44,10 +44,10 @@ const createinventory = async(req, res) => {
 };
 
 //function to update a existing Inventory based on Inventory ID
-/* const updateinventory = async(req, res) => {
-    if(!ObjectId.isValid(req.params.id)) {
+const updateinventory = async(req, res) => {
+    /*if(!ObjectId.isValid(req.params.id)) {
         res.status(400).json('Must use a Valid Inventory Id when updating')
-    }
+    }*/
     const InventoryId = new ObjectId(req.params.id);
     const Inventory = {
         InventoryID: req.body.InventoryID,
@@ -64,7 +64,7 @@ const createinventory = async(req, res) => {
     } else {
         res.status(500).json(response.error || 'Some error occured while updating Inventory');
     }
-}; */
+}; 
 
 // Function to delete a customer by ID
 const deleteinventory = async (req, res) => {

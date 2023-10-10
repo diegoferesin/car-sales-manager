@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const customerController = require('../controller/customer');
+const customerController = require('../controllers/customer');
 const { isAuthenticated } = require('../middleware/authenticate');
 
 //Handle GET requests for a customer

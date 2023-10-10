@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const dealershipController = require('../controller/dealership');
+const dealershipController = require('../controllers/dealership');
 const { isAuthenticated } = require('../middleware/authenticate');
 
 //Handle GET requests for a dealership
