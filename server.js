@@ -20,9 +20,9 @@ app.use('/', require('./routes'));
 
 mongodb.initDb((err, db) => {
     try {
-        app.listen(port, () => {console.log(`Server listening on port ${port}`)});
+        app.listen(port, () => { console.log(`Server listening on port ${port}. Database is up`) });
     }
-    catch (err){
+    catch (err) {
         console.log(err);
     }
 });
