@@ -131,3 +131,4 @@ dist
 
 .env
 .code-workspace
+.idea
