@@ -27,7 +27,7 @@ const getSingle = async (req, res) => {
 //function to create a new customer
 const createorder = async(req, res) => {
     const Order = {
-        SaleID: req.body.SaleID,
+        SaleID: req.body.SaleID, //REQUIRED ALL IDS
         InventoryID: req.body.InventoryID,
         CustomerID: req.body.CustomerID,
         Date: req.body.Date,

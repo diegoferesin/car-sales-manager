@@ -28,7 +28,7 @@ const getSingle = async (req, res) => {
 const createinventory = async(req, res) => {
     const Inventory = {
         InventoryID: req.body.InventoryID,
-        Make: req.body.Make,
+        Make: req.body.Make, //REQUIRE ALL
         Model: req.body.Model,
         Year: req.body.Year,
         Color: req.body.Color,

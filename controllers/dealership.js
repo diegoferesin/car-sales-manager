@@ -28,7 +28,7 @@ const getSingle = async (req, res) => {
 const createdealership = async(req, res) => {
     const Dealership = {
         DealershipID: req.body.DealershipID,
-        Name: req.body.Name,
+        Name: req.body.Name, //REQUIRED
         Location: req.body.Location,
         Email: req.body.Email,
         Phone: req.body.Phone, 
