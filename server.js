@@ -5,6 +5,10 @@ const app = express();
 
 const mongodb = require('./data/database');
 
+const session = require('express-session');
+const passport = require('passport');
+const GitHubStrategy = require('passport-github2').Strategy;
+
 app.use(bodyParser.json())
     .use(session({
         secret: 'secret',
