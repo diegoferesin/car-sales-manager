@@ -1,10 +1,18 @@
 const express = require('express');
 const router = express.Router();
-
-router.get('/', (req, res) => {
-    res.send('Hello team 1 and Hello World!');
-});
+const passport = require('passport');
 
 router.use('/', require('./swagger'));
+
+router.get('/login', passport.authenticate('github'), (req, res) => {});
+
+router.get('/logout', function(req, res, next){
+    req.logout(function(err){
+        if (err){
+            return next(err);
+        }
+        res.redirect('/');
+    });
+});
 
 module.exports = router;
