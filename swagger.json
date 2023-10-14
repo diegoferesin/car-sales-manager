@@ -5,11 +5,10 @@
     "description": "Car Sales Manager API",
     "version": "1.0.0"
   },
-  "host": "car-sales-manager.onrender.com/",
+  "host": "car-sales-manager.onrender.com",
   "basePath": "/",
   "schemes": [
-    "https",
-    "http"
+    "https"
   ],
   "paths": {
     "/": {
