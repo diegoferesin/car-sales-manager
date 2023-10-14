@@ -36,7 +36,7 @@ app.use(cors(
     }
 ));
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', require('./routes'));
 
 passport.use(new GitHubStrategy({
