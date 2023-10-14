@@ -8,8 +8,8 @@ const doc = {
         title: 'BYU-I - CSE341 - Final Team Project',
         description: 'Car Sales Manager API'
     },
-    host: 'car-sales-manager.onrender.com/',
-    schemes: ['https', 'http']
+    host: 'car-sales-manager.onrender.com',
+    schemes: ['https']
 };
 
 swaggerAutogen(outputFile, endpointsFiles, doc);
