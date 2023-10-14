@@ -7,6 +7,450 @@
 	},
 	"item": [
 		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "01 - Get All the Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/customer",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02 - Get Customer By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/customer/652a1d888047bbfbc89424b8",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"customer",
+								"652a1d888047bbfbc89424b8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03 - Create a Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"String2\",\n  \"password\": \"String\",\n  \"firstName\": \"String\",\n  \"lastName\": \"String\",\n  \"email\": \"String\",\n  \"phone\": \"String\",\n  \"address\": \"String\",\n  \"birthdate\": \"String\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePath}}/customer",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04 - Update Customer Info By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"String Updated\",\n  \"password\": \"String Updated\",\n  \"firstName\": \"String Updated\",\n  \"lastName\": \"String Updated\",\n  \"email\": \"String Updated\",\n  \"phone\": \"String Updated\",\n  \"address\": \"String Updated\",\n  \"birthdate\": \"String Updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePath}}/customer/652a225ebfc1abdda03f4041",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"customer",
+								"652a225ebfc1abdda03f4041"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05 - Delete Customer By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/customer/652a1d888047bbfbc89424b8",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"customer",
+								"652a1d888047bbfbc89424b8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dealership",
+			"item": [
+				{
+					"name": "01 - Get All the Dealership",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/dealership",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"dealership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02 - Get Dealership By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/dealership/652a3b28cbc83400eb6d30d2",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"dealership",
+								"652a3b28cbc83400eb6d30d2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03 - Create a Dealership",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"String\",\n    \"location\": \"String\",\n    \"phone\": \"String\",\n    \"zipCode\": \"String\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePath}}/dealership",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"dealership"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04 - Update Dealership Info By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"location\": \"New location\",\n    \"zipCode\": \"Zip Code Updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePath}}/dealership/652a2ddd8047bbfbc89428a9",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"dealership",
+								"652a2ddd8047bbfbc89428a9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05 - Delete Dealership By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/dealership/652a2ddd8047bbfbc89428a8",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"dealership",
+								"652a2ddd8047bbfbc89428a8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "01 - Get All the Inventory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/inventory",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"inventory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02 - Get Inventory By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/inventory/652a2df38047bbfbc8942c92",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"inventory",
+								"652a2df38047bbfbc8942c92"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03 - Create a Inventory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"carMake\": \"String\",\n    \"carModel\": \"String\",\n    \"carYear\": \"String\",\n    \"color\": \"String\",\n    \"mileage\": \"String\",\n    \"price\": \"String\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePath}}/inventory",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"inventory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04 - Update Inventory Info By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"carMake\": \"String Updated\",\n    \"carModel\": \"String Updated\",\n    \"carYear\": \"String Updated\",\n    \"color\": \"String Updated\",\n    \"mileage\": \"String Updated\",\n    \"price\": \"String Updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePath}}/inventory/652a2df38047bbfbc8942c92",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"inventory",
+								"652a2df38047bbfbc8942c92"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05 - Delete Inventory By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/inventory/652a2df38047bbfbc8942c92",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"inventory",
+								"652a2df38047bbfbc8942c92"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "01 - Get All the Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/orders",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "02 - Get Order By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/orders/652a2e0e8047bbfbc894307a",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"orders",
+								"652a2e0e8047bbfbc894307a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "03 - Create an Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerID\": \"String\",\n    \"inventoryID\": \"String\",\n    \"saleDate\": \"String\",\n    \"dealership\": \"String\",\n    \"price\": \"String\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePath}}/orders",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "04 - Update Orders Info By ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerID\": \"String\",\n    \"inventoryID\": \"String\",\n    \"saleDate\": \"String\",\n    \"dealership\": \"String\",\n    \"price\": \"String\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basePath}}/orders/652ab42b36044298cdbc6730",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"orders",
+								"652ab42b36044298cdbc6730"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "05 - Delete Order By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{basePath}}/orders/651cdaff1738b8308699b6c6",
+							"host": [
+								"{{basePath}}"
+							],
+							"path": [
+								"orders",
+								"651cdaff1738b8308699b6c6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "00 - Home - Hello World Message 😁",
 			"request": {
 				"method": "GET",
@@ -18,6 +462,40 @@
 					],
 					"path": [
 						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "01 - Login",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{basePath}}/login",
+					"host": [
+						"{{basePath}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02 - Logout",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{basePath}}/logout",
+					"host": [
+						"{{basePath}}"
+					],
+					"path": [
+						"logout"
 					]
 				}
 			},
