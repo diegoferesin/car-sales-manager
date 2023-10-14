@@ -19,10 +19,11 @@ app.use((req, res, next) => {
 app.use('/', require('./routes'));
 
 mongodb.initDb((err, db) => {
-    try {
-        app.listen(port, () => { console.log(`Server listening on port ${port}. Database is up`) });
-    }
-    catch (err) {
+    if (err) {
         console.log(err);
+    } else {
+        app.listen(port, () => {
+            console.log(`Server running on port ${port}`);
+        })
     }
 });
