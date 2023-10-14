@@ -5,6 +5,7 @@ const Dealership = require('../models/dealership');
 
 //function to Get all dealership
 const getDealership = async (req, res) => {
+    //#swagger.tags = ['Dealership']
     console.log("Getting all the dealership");
     Dealership.find().then(dealerships => {
         console.log('Dealerships found');
@@ -18,6 +19,7 @@ const getDealership = async (req, res) => {
 
 //function to Get a dealership by ID
 const getDealershipByID = async (req, res) => {
+    //#swagger.tags = ['Dealership']
     console.log("Validating dealershipID");
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid dealershipID to find a dealership.");
@@ -43,6 +45,7 @@ const getDealershipByID = async (req, res) => {
 
 //function to create a new dealership
 const createDealership = async (req, res) => {
+    //#swagger.tags = ['Dealership']
     const { name, location, phone, email, zipCode } = req.body;
 
     try {
@@ -66,6 +69,7 @@ const createDealership = async (req, res) => {
 
 //function to update a existing dealership based on Dealership ID
 const updateDealershipById = async (req, res) => {
+    //#swagger.tags = ['Dealership']
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid dealershipID to update a customer.");
         res.status(400).json({ message: "Must use a valid dealershipID to update a customer." });
@@ -96,6 +100,7 @@ const updateDealershipById = async (req, res) => {
 
 // Function to delete a dealership by ID
 const deleteDealershipByID = async (req, res) => {
+    //#swagger.tags = ['Dealership']
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid dealershipID to delete one.");
         return res.status(400).json({ message: "Must use a valid dealershipID to delete one." });

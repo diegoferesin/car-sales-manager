@@ -5,6 +5,7 @@ const Customer = require('../models/customer');
 
 //function to Get all customers
 const getCustomers = async (req, res) => {
+    //#swagger.tags = ['Customers']
     console.log("Getting all the customers");
     Customer.find().then(customers => {
         console.log('Customers found');
@@ -18,6 +19,7 @@ const getCustomers = async (req, res) => {
 
 //function to Get a customer by ID
 const getCustomerByID = async (req, res) => {
+    //#swagger.tags = ['Customers']
     console.log("Validating customerID");
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid customerID to find a customer.");
@@ -43,6 +45,7 @@ const getCustomerByID = async (req, res) => {
 
 //function to create a new customer
 const createCustomer = async (req, res) => {
+    //#swagger.tags = ['Customers']
     const { customerID, username, password, firstName, lastName, email, phone, address, birthdate } = req.body;
 
     try {
@@ -82,6 +85,7 @@ const createCustomer = async (req, res) => {
 
 //function to update a existing customer based on Customer ID
 const updateCustomer = async (req, res) => {
+    //#swagger.tags = ['Customers']
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid customerID to update a customer.");
         res.status(400).json({ message: "Must use a valid customerID to update a customer." });
@@ -112,6 +116,7 @@ const updateCustomer = async (req, res) => {
 
 // Function to delete a customer by ID
 const deleteCustomerByID = async (req, res) => {
+    //#swagger.tags = ['Customers']
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid customerID to delete one.");
         return res.status(400).json({ message: "Must use a valid customerID to delete one." });

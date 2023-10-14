@@ -5,6 +5,7 @@ const Order = require('../models/orders');
 
 //function to Get all orders
 const getOrders = async (req, res) => {
+    //#swagger.tags = ['Orders']
     console.log("Getting all the orders");
     Order.find().then(orders => {
         console.log('Orders found');
@@ -18,6 +19,7 @@ const getOrders = async (req, res) => {
 
 //function to Get a order by ID
 const getOrderById = async (req, res) => {
+    //#swagger.tags = ['Orders']
     console.log("Validating orderID");
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid orderID to find a order.");
@@ -43,6 +45,7 @@ const getOrderById = async (req, res) => {
 
 //function to create a new order
 const createOrder = async (req, res) => {
+    //#swagger.tags = ['Orders']
     const { customerID, inventoryID, saleDate, dealership, price } = req.body;
 
     try {
@@ -66,6 +69,7 @@ const createOrder = async (req, res) => {
 
 //function to update a existing Order based on Order ID
 const updateOrderById = async (req, res) => {
+    //#swagger.tags = ['Orders']
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid orderID to update a customer.");
         return res.status(400).json({ message: "Must use a valid orderID to update a customer." });
@@ -95,6 +99,7 @@ const updateOrderById = async (req, res) => {
 
 // Function to delete a order by ID
 const deleteOrderById = async (req, res) => {
+    //#swagger.tags = ['Orders']
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid orderID to delete one.");
         return res.status(400).json({ message: "Must use a valid orderID to delete one." });

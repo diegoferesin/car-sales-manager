@@ -5,6 +5,7 @@ const Inventory = require('../models/inventory');
 
 //function to Get all Inventory
 const getInventory = async (req, res) => {
+    //#swagger.tags = ['Inventory']
     console.log("Getting all the Inventory");
     Inventory.find().then(inventory => {
         console.log('Inventory found');
@@ -18,6 +19,7 @@ const getInventory = async (req, res) => {
 
 //function to Get a Inventory by ID
 const getInventoryByID = async (req, res) => {
+    //#swagger.tags = ['Inventory']
     console.log("Validating inventoryID");
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid inventoryID to find a inventory.");
@@ -43,6 +45,7 @@ const getInventoryByID = async (req, res) => {
 
 //function to create a new inventory item
 const createInventory = async (req, res) => {
+    //#swagger.tags = ['Inventory']
     const { carMake, carModel, carYear, color, mileage, price } = req.body;
 
     try {
@@ -65,6 +68,7 @@ const createInventory = async (req, res) => {
 
 //function to update a existing Inventory based on Inventory ID
 const updateInventoryById = async (req, res) => {
+    //#swagger.tags = ['Inventory']
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid inventoryID to update a customer.");
         res.status(400).json({ message: "Must use a valid inventoryID to update a customer." });
@@ -94,6 +98,7 @@ const updateInventoryById = async (req, res) => {
 
 // Function to delete a inventory by ID
 const deleteInventoryById = async (req, res) => {
+    //#swagger.tags = ['Inventory']
     if (!ObjectId.isValid(req.params.id)) {
         console.log("Must use a valid inventoryID to delete one.");
         return res.status(400).json({ message: "Must use a valid inventoryID to delete one." });
