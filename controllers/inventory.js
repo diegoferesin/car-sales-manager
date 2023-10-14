@@ -1,92 +1,159 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
+const Inventory = require('../models/inventory');
 
 
 //function to Get all Inventory
-const getAll = async (req, res) => {
-    const result = await mongodb.getDatabase().db().collection('Inventory').find();
-    result.toArray().then((lists) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(lists)
+const getInventory = async (req, res) => {
+    console.log("Getting all the Inventory");
+    Inventory.find().then(inventory => {
+        console.log('Inventory found');
+        res.status(200).json(inventory);
+    }
+    ).catch(err => {
+        console.log(err.message);
+        res.status(500).json({ message: err.message });
     });
-}; 
+};
 
 //function to Get a Inventory by ID
-const getSingle = async (req, res) => {
-    if(!ObjectId.isValid(req.params.id)) {
-        res.status(400).json('Must use a Valid Inventory Id to find Item')
+const getInventoryByID = async (req, res) => {
+    console.log("Validating inventoryID");
+    if (!ObjectId.isValid(req.params.id)) {
+        console.log("Must use a valid inventoryID to find a inventory.");
+        return res.status(400).json({ message: "Must use a valid inventoryID to find a inventory." });
     }
-    const InventoryID = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection('Inventory').find({_id: InventoryID});
-    result.toArray().then((lists) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(lists[0])
-    });
-}; 
+    const inventoryID = req.params.id;
+    console.log(`Getting inventory by ID: ${inventoryID}`);
+    Inventory.findById(inventoryID)
+        .then(inventory => {
+            if (inventory) {
+                console.log('Inventory found it:', inventory);
+                return res.status(200).json(inventory);
+            } else {
+                console.log(`No inventory found with ID: ${inventoryID}`);
+                res.status(500).json({ message: `No inventory found with ID: ${dealershipID}` });
+            }
+        })
+        .catch(err => {
+            console.log(err.message);
+            res.status(500).json({ message: err.message });
+        });
+};
 
 //function to create a new inventory item
-const createinventory = async(req, res) => {
-    const Inventory = {
-        InventoryID: req.body.InventoryID,
-        Make: req.body.Make,
-        Model: req.body.Model,
-        Year: req.body.Year,
-        Color: req.body.Color,
-        Milage: req.body.Milage, 
-        Price: req.body.Price
-        };
-    const response = await mongodb.getDatabase().db().collection('Inventory').insertOne(Inventory);
-    if (response.acknowledged){
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occured while creating new Inventory item');
+const createInventory = async (req, res) => {
+    const { carMake, carModel, carYear, color, mileage, price } = req.body;
+
+    try {
+        console.log(`Creating inventory. Make: ${carMake}, model: ${carModel}, year: ${carYear}`);
+        const inventory = new Inventory({
+            carMake, carModel, carYear, color, mileage, price
+        });
+        inventory.save().then((inventory) => {
+            console.log();
+            console.log('Inventory created successfully');
+            console.log(`InventoryID: ${inventory._id}`);
+        })
+        return res.status(201).json(inventory);
+    }
+    catch (err) {
+        console.log(err.message);
+        res.status(400).json({ message: err.message });
     }
 };
 
 //function to update a existing Inventory based on Inventory ID
-const updateinventory = async(req, res) => {
-    /*if(!ObjectId.isValid(req.params.id)) {
-        res.status(400).json('Must use a Valid Inventory Id when updating')
-    }*/
-    const InventoryId = new ObjectId(req.params.id);
-    const Inventory = {
-        InventoryID: req.body.InventoryID,
-        Make: req.body.Make,
-        Model: req.body.Model,
-        Year: req.body.Year,
-        Color: req.body.Color,
-        Milage: req.body.Milage, 
-        Price: req.body.Price
-        };
-    const response = await mongodb.getDatabase().db().collection('Inventory').replaceOne({_id: InventoryId}, Inventory);
-    if (response.modifiedCount > 0 ){
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occured while updating Inventory');
+const updateInventoryById = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        console.log("Must use a valid inventoryID to update a customer.");
+        res.status(400).json({ message: "Must use a valid inventoryID to update a customer." });
     }
-}; 
 
-// Function to delete a customer by ID
-const deleteinventory = async (req, res) => {
-    const studentId = new ObjectId(req.params.id);
-    
+    let inventory = new Inventory({});
+    inventory._id = req.params.id;
+
+    const inventoryUpdated = validateAttributes(req, inventory);
+
+    console.log(`Getting inventory for update with ID: ${inventory._id}`);
+    Inventory.findByIdAndUpdate(inventory._id, inventoryUpdated, { new: true })
+        .then(updatedInventory => {
+            if (updatedInventory) {
+                console.log('inventory info updated: ', updatedInventory);
+                res.status(200).json(updatedInventory);
+            } else {
+                console.log(`No inventory found with ID: ${inventory._id} for update`);
+                res.status(400).json({ message: `No inventory found with ID: ${inventory._id} for update` });
+            }
+        })
+        .catch(err => {
+            console.log(err.message);
+            res.status(400).json({ message: err.message });
+        });
+};
+
+// Function to delete a inventory by ID
+const deleteInventoryById = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        console.log("Must use a valid inventoryID to delete one.");
+        return res.status(400).json({ message: "Must use a valid inventoryID to delete one." });
+    }
+
     try {
-        const response = await mongodb.getDatabase().db().collection('inventory').deleteOne({ _id: inventoryId });
-        if (response.deletedCount > 0) {
-            res.status(204).send();
-        } else {
-            res.status(404).json({ message: 'Inventory not found' });
+        console.log(`Deleting inventory with ID: ${req.params.id}`);
+        const inventoryID = req.params.id;
+        const deletedInventory = await Inventory.findByIdAndRemove(inventoryID);
+        if (deletedInventory == null || !deletedInventory) {
+            if (deletedInventory == null) {
+                console.log(`No inventory found with ID: ${inventoryID} for delete`);
+                return res.status(404).json({ message: `No inventory found with ID: ${inventoryID} for delete` });;
+            }
+            console.log(deletedInventory);
+            return res.status(404).json({ message: `No inventory found with ID: ${inventoryID} for delete` });;
         }
-    } catch (error) {
-        res.status(500).json({ error: "An error occurred while deleting the inventory.", details: error.message });
+
+        console.log(`Inventory with ID: ${inventoryID} was removed`)
+        return res.status(204).send();
+    } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err.message });
     }
 };
 
+function validateAttributes(req, inventoryToUpdate) {
+
+    if (req.body.carMake !== undefined && req.body.carMake !== '') {
+        inventoryToUpdate.carMake = req.body.carMake;
+    }
+
+    if (req.body.carModel !== undefined && req.body.carModel !== '') {
+        inventoryToUpdate.carModel = req.body.carModel;
+    }
+
+    if (req.body.carYear !== undefined && req.body.carYear !== '') {
+        inventoryToUpdate.carYear = req.body.carYear;
+    }
+
+    if (req.body.color !== undefined && req.body.color !== '') {
+        inventoryToUpdate.color = req.body.color;
+    }
+
+    if (req.body.mileage !== undefined && req.body.mileage !== '') {
+        inventoryToUpdate.mileage = req.body.mileage;
+    }
+
+    if (req.body.price !== undefined && req.body.price !== '') {
+        inventoryToUpdate.price = req.body.price;
+    }
+
+    return inventoryToUpdate;
+}
+
 
 module.exports = {
-    getAll,
-    getSingle,
-    createinventory,
-    updateinventory,
-    deleteinventory
+    getInventory,
+    getInventoryByID,
+    createInventory,
+    updateInventoryById,
+    deleteInventoryById
 };

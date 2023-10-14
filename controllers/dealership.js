@@ -1,91 +1,156 @@
 const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
+const Dealership = require('../models/dealership');
 
 
-//function to Get all dealerships
-const getAll = async (req, res) => {
-    const result = await mongodb.getDatabase().db().collection('Dealership').find();
-    result.toArray().then((lists) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(lists)
+//function to Get all dealership
+const getDealership = async (req, res) => {
+    console.log("Getting all the dealership");
+    Dealership.find().then(dealerships => {
+        console.log('Dealerships found');
+        res.status(200).json(dealerships);
+    }
+    ).catch(err => {
+        console.log(err.message);
+        res.status(500).json({ message: err.message });
     });
-}; 
+};
 
 //function to Get a dealership by ID
-const getSingle = async (req, res) => {
-    if(!ObjectId.isValid(req.params.id)) {
-        res.status(400).json('Must use a Valid Dealership Id to find Dealership')
+const getDealershipByID = async (req, res) => {
+    console.log("Validating dealershipID");
+    if (!ObjectId.isValid(req.params.id)) {
+        console.log("Must use a valid dealershipID to find a dealership.");
+        res.status(400).json({ message: "Must use a valid dealershipID to find a dealership." });
     }
-    const DealershipId1 = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection('Dealership').find({_id: DealershipId1});
-    result.toArray().then((lists) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(lists[0])
-    });
-}; 
+    const dealershipID = req.params.id;
+    console.log(`Getting dealership by ID: ${dealershipID}`);
+    Dealership.findById(dealershipID)
+        .then(dealership => {
+            if (dealership) {
+                console.log('Dealership found it:', dealership);
+                res.status(200).json(dealership);
+            } else {
+                console.log(`No dealership found with ID: ${dealershipID}`);
+                res.status(500).json({ message: `No dealership found with ID: ${dealershipID}` });
+            }
+        })
+        .catch(err => {
+            console.log(err.message);
+            res.status(500).json({ message: err.message });
+        });
+};
 
-//function to create a new Dealership
-const createdealership = async(req, res) => {
-    const Dealership = {
-        DealershipID: req.body.DealershipID,
-        Name: req.body.Name,
-        Location: req.body.Location,
-        Email: req.body.Email,
-        Phone: req.body.Phone, 
-        Zipcode: req.body.Zipcode,
-        };
-    const response = await mongodb.getDatabase().db().collection('Dealership').insertOne(Dealership);
-    if (response.acknowledged){
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occured while creating new Dealership');
+//function to create a new dealership
+const createDealership = async (req, res) => {
+    const { name, location, phone, email, zipCode } = req.body;
+
+    try {
+        console.log(`Creating dealership with name: ${name}, location: ${location}, email: ${email}`);
+        const dealership = new Dealership({
+            name, location, phone, email, zipCode
+        });
+        const newDealership = dealership.save().then((dealership) => {
+            console.log();
+            console.log('Dealership created successfully');
+            console.log(`DealershipID: ${dealership._id}`);
+            console.log(`Location: ${dealership.location}`);
+        })
+        res.status(201).json(dealership);
+    }
+    catch (err) {
+        console.log(err.message);
+        res.status(400).json({ message: err.message });
     }
 };
 
-//function to update a existing dealership based on ID
-const updatedealership = async(req, res) => {
-    if(!ObjectId.isValid(req.params.id)) {
-        res.status(400).json('Must use a Valid Dealership Id when updating')
+//function to update a existing dealership based on Dealership ID
+const updateDealershipById = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        console.log("Must use a valid dealershipID to update a customer.");
+        res.status(400).json({ message: "Must use a valid dealershipID to update a customer." });
     }
-    const DealershipId = new ObjectId(req.params.id);
-    const Dealership = {
-        DealershipID: req.body.DealershipID,
-        Name: req.body.Name,
-        Location: req.body.Location,
-        Email: req.body.Email,
-        Phone: req.body.Phone, 
-        Zipcode: req.body.Zipcode,
-        };
-    const response = await mongodb.getDatabase().db().collection('Dealership').replaceOne({_id: DealershipId}, Dealership);
-    if (response.modifiedCount > 0 ){
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occured while updating Dealership');
-    }
-};
 
+    let dealership = new Dealership({});
+    dealership._id = req.params.id;
+
+    const dealershipUpdated = validateAttributes(req, dealership);
+
+    console.log(`Getting dealership for update with ID: ${dealership._id}`);
+    Dealership.findByIdAndUpdate(dealership._id, dealershipUpdated, { new: true })
+        .then(updatedDealership => {
+            if (updatedDealership) {
+                console.log('Dealership info updated: ', updatedDealership);
+                res.status(200).json(updatedDealership);
+            } else {
+                console.log(`No dealership found with ID: ${dealership._id} for update`);
+                res.status(400).json({ message: `No dealership found with ID: ${dealership._id} for update` });
+            }
+        })
+        .catch(err => {
+            console.log(err.message);
+            res.status(400).json({ message: err.message });
+        });
+};
 
 
 // Function to delete a dealership by ID
-const deletedealership = async (req, res) => {
-    const studentId = new ObjectId(req.params.id);
-    
+const deleteDealershipByID = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        console.log("Must use a valid dealershipID to delete one.");
+        return res.status(400).json({ message: "Must use a valid dealershipID to delete one." });
+    }
+
     try {
-        const response = await mongodb.getDatabase().db().collection('dealership').deleteOne({ _id: dealershipId });
-        if (response.deletedCount > 0) {
-            res.status(204).send();
-        } else {
-            res.status(404).json({ message: 'dealership not found' });
+        console.log(`Deleting dealership with ID: ${req.params.id}`);
+        const dealershipID = req.params.id;
+        const deletedDealership = await Dealership.findByIdAndRemove(dealershipID);
+        if (deletedDealership == null || !deletedDealership) {
+            if (deletedDealership == null) {
+                console.log(`No dealership found with ID: ${dealershipID} for delete`);
+                return res.status(404).json({ message: `No dealership found with ID: ${dealershipID} for delete` });;
+            }
+            console.log(deletedDealership);
+            return res.status(404).json({ message: `No dealership found with ID: ${dealershipID} for delete` });;
         }
-    } catch (error) {
-        res.status(500).json({ error: "An error occurred while deleting the dealership.", details: error.message });
+
+        console.log(`Dealership with ID: ${dealershipID} was removed`)
+        return res.status(204).send();
+    } catch (err) {
+        console.log(err.message);
+        return res.status(500).json({ message: err.message });
     }
 };
 
+function validateAttributes(req, dealershipToUpdate) {
+
+    if (req.body.name !== undefined && req.body.name !== '') {
+        dealershipToUpdate.name = req.body.name;
+    }
+
+    if (req.body.location !== undefined && req.body.location !== '') {
+        dealershipToUpdate.location = req.body.location;
+    }
+
+    if (req.body.phone !== undefined && req.body.phone !== '') {
+        dealershipToUpdate.phone = req.body.phone;
+    }
+
+    if (req.body.email !== undefined && req.body.email !== '') {
+        dealershipToUpdate.email = req.body.email;
+    }
+
+    if (req.body.zipCode !== undefined && req.body.zipCode !== '') {
+        dealershipToUpdate.zipCode = req.body.zipCode;
+    }
+
+    return dealershipToUpdate;
+}
+
 module.exports = {
-    getAll,
-    getSingle,
-    createdealership,
-    updatedealership,
-    deletedealership
+    getDealership,
+    getDealershipByID,
+    createDealership,
+    updateDealershipById,
+    deleteDealershipByID
 };

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const customerSchema = new mongoose.Schema({
-    customerID: String,
     username: String,
     password: String,
     firstName: String,
@@ -20,4 +19,4 @@ customerSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoose.model('Customer', customerSchema);
+module.exports = mongoose.model('Customer', customerSchema, 'customers');
