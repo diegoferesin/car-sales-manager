@@ -66,7 +66,7 @@ app.get('/github/callback', passport.authenticate('github', {
         req.session.user = req.user;
         res.redirect('/');
     });
-//
+
 
 process.on('uncaughtException', (err, origin) => {
     console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception origin: ${origin}`);
