@@ -7,6 +7,11 @@ router.get('/', (req, res) => {
     res.send('Hello Team 1 and Hello World!');
 });
 
+router.get('/testing', (req, res) => {
+    //#swagger.tag=['Welcome']
+    res.send('Testing');
+});
+
 router.get('/logout-message', (req, res) => {
     res.send('Logged out');
 });
